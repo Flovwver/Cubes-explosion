@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CubeBehaviour : MonoBehaviour
@@ -13,6 +14,8 @@ public class CubeBehaviour : MonoBehaviour
     [Range(0.01f, 1f)]
     [SerializeField]
     private float _scaleFactor = 0.5f;
+
+    public event Action<CubeBehaviour> Clicked;
 
     public float SplitChance
     {
@@ -30,5 +33,10 @@ public class CubeBehaviour : MonoBehaviour
     {
         get => _scaleFactor;
         set => _scaleFactor = Mathf.Clamp(value, 0.01f, 1f);
+    }
+
+    public void NotifyClicked()
+    {
+        Clicked?.Invoke(this);
     }
 }
