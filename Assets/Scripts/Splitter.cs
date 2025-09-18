@@ -10,25 +10,24 @@ public class Splitter : MonoBehaviour
 
     private void OnEnable()
     {
-        _raycaster.CubeHit += OnCubeHit;
+        if (_raycaster != null)
+            _raycaster.CubeHit += OnCubeHit;
     }
 
     private void OnDisable()
     {
-        _raycaster.CubeHit -= OnCubeHit;
+        if (_raycaster != null)
+            _raycaster.CubeHit -= OnCubeHit;
     }
 
-    private void OnCubeHit(GameObject hitObject)
+    private void OnCubeHit(CubeBehaviour cubeBehaviour)
     {
-        if (!hitObject.TryGetComponent<CubeBehaviour>(out var cubeData))
-            throw new ArgumentException("Hit object does not have CubeBehaviour component", nameof(hitObject));
-
-        if (Random.value > cubeData.SplitChance)
+        if (Random.value > cubeBehaviour.SplitChance)
             return;
 
-        var bodies = _spawner.SpawnChildren(hitObject);
+        var bodies = _spawner.SpawnChildren(cubeBehaviour);
 
-        var center = hitObject.transform.position;
+        var center = cubeBehaviour.transform.position;
 
         _explosioner.Explode(bodies, center);
     }

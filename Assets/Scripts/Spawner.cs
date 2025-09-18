@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _cubePrefab;
+    [SerializeField] private CubeBehaviour _cubePrefab;
     [SerializeField] private CubeBehaviour _progenitorCube;
     [SerializeField] private int _minChildren = 2;
     [SerializeField] private int _maxChildren = 6;
@@ -13,19 +13,18 @@ public class Spawner : MonoBehaviour
 
     private void OnEnable()
     {
-        _progenitorCube.Clicked += OnCubeClicked;
+        if (_progenitorCube != null)
+            _progenitorCube.Clicked += OnCubeClicked;
     }
 
     private void OnDisable()
     {
-        _progenitorCube.Clicked -= OnCubeClicked;
+        if (_progenitorCube != null)
+            _progenitorCube.Clicked -= OnCubeClicked;
     }
 
-    public IEnumerable<Rigidbody> SpawnChildren(GameObject parentCube)
+    public IEnumerable<Rigidbody> SpawnChildren(CubeBehaviour parentCube)
     {
-        if (!parentCube.TryGetComponent<CubeBehaviour>(out var parentData))
-            yield break;
-
         int count = Random.Range(_minChildren, _maxChildren + 1);
 
         Vector3 center = parentCube.transform.position;
@@ -33,21 +32,19 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             Vector3 randomOffset = Random.insideUnitSphere * parentCube.transform.localScale.x + _baseSpawnOffset;
-            GameObject child = Instantiate(_cubePrefab, center + randomOffset, Random.rotation);
-            child.transform.localScale = parentCube.transform.localScale * parentData.ScaleFactor;
+            CubeBehaviour child = Instantiate(_cubePrefab, center + randomOffset, Random.rotation);
+            child.transform.localScale = parentCube.transform.localScale * parentCube.ScaleFactor;
 
             var renderer = child.GetComponent<Renderer>();
             renderer.material.SetColor("_EmissionColor", new(Random.value, Random.value, Random.value));
 
-            var childData = child.GetComponent<CubeBehaviour>();
-            childData.SplitChance = parentData.SplitChance * parentData.SplitChanceFactor;
-            childData.SplitChanceFactor = parentData.SplitChanceFactor;
-            childData.ScaleFactor = parentData.ScaleFactor;
-            
-            childData.Clicked += OnCubeClicked;
+            child.SplitChance = parentCube.SplitChance * parentCube.SplitChanceFactor;
+            child.SplitChanceFactor = parentCube.SplitChanceFactor;
+            child.ScaleFactor = parentCube.ScaleFactor;
 
-            var body = child.GetComponent<Rigidbody>();
-            yield return body;
+            child.Clicked += OnCubeClicked;
+
+            yield return child.Rigidbody;
         }
     }
 

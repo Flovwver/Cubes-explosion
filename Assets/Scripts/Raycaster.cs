@@ -1,29 +1,34 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Raycaster : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
-    [SerializeField] private Ray _ray;
     [SerializeField] private float _maxRayDistance = 10f;
+    [SerializeField] private InputReader _inputReader;
 
-    public event Action<GameObject> CubeHit;
+    public event Action<CubeBehaviour> CubeHit;
 
-    private void Update()
+    private void OnEnable()
     {
-        _ray = _camera.ScreenPointToRay(Input.mousePosition);
+        if (_inputReader != null)
+            _inputReader.PointerClicked += OnPointerClicked;
+    }
 
-        if (!Input.GetMouseButtonDown(0)) 
-            return;
+    private void OnDisable()
+    {
+        if (_inputReader != null)
+            _inputReader.PointerClicked -= OnPointerClicked;
+    }
 
-        if (Physics.Raycast(_ray, out RaycastHit hit, _maxRayDistance))
+    private void OnPointerClicked(Ray ray)
+    {
+        if (Physics.Raycast(ray, out RaycastHit hit, _maxRayDistance))
         {
             GameObject hitObject = hit.collider.gameObject;
             
             if (hitObject.TryGetComponent<CubeBehaviour>(out var cubeBehaviour))
             {
-                CubeHit?.Invoke(hitObject);
+                CubeHit?.Invoke(cubeBehaviour);
                 cubeBehaviour.NotifyClicked();
             }
         }
