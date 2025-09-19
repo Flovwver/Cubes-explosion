@@ -202,8 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4784516131b7a84dbd1faffcb899b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cubePrefab: {fileID: 8703561934751845217, guid: de9471faa89891640b337bc0b293a4c9, type: 3}
-  _progenitorCube: {fileID: 1245788345}
+  _cubePrefab: {fileID: 7555003639171235420, guid: de9471faa89891640b337bc0b293a4c9, type: 3}
+  _progenitorCube: {fileID: 3949179026561398901}
   _minChildren: 2
   _maxChildren: 6
   _baseSpawnOffset: {x: 0, y: 0.5, z: 0}
@@ -967,17 +967,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214362171}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1245788345 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8703561934751845217, guid: de9471faa89891640b337bc0b293a4c9, type: 3}
-  m_PrefabInstance: {fileID: 3949179026561398900}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3095be89275f62a42b9032bd6435e0c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1255694795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,6 +1173,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de9471faa89891640b337bc0b293a4c9, type: 3}
+--- !u!114 &3949179026561398901 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7555003639171235420, guid: de9471faa89891640b337bc0b293a4c9, type: 3}
+  m_PrefabInstance: {fileID: 3949179026561398900}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a21a8ea9364c714c83d1a7cc2830391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

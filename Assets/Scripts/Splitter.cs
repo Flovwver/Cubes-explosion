@@ -18,11 +18,20 @@ public class Splitter : MonoBehaviour
             _raycaster.CubeHit -= OnCubeHit;
     }
 
-    private void OnCubeHit(CubeBehaviour cubeBehaviour)
+    private void OnCubeHit(Cube parentCube)
     {
-        if (Random.value <= cubeBehaviour.SplitChance)
-            _spawner.SpawnChildren(cubeBehaviour);
+        if (Random.value > parentCube.SplitChance)
+        {
+            _explosioner.Explode(parentCube);
+        }
+        else
+        {
+            var bodies = _spawner.SpawnChildren(parentCube);
+            var center = parentCube.transform.position;
 
-        _explosioner.Explode(cubeBehaviour);
+            _explosioner.Explode(bodies, center);
+        }
+
+        _spawner.DestroyCube(parentCube);
     }
 }

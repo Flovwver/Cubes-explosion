@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CubeBehaviour : MonoBehaviour
+public class Cube : MonoBehaviour
 {
     [Range(0f, 1f)]
     [SerializeField]
@@ -17,8 +17,6 @@ public class CubeBehaviour : MonoBehaviour
 
     [SerializeField]
     private Rigidbody _rigidbody;
-
-    public event Action<CubeBehaviour> Clicked;
 
     public float SplitChance
     {
@@ -46,10 +44,5 @@ public class CubeBehaviour : MonoBehaviour
                 _rigidbody = GetComponent<Rigidbody>();
             return _rigidbody;
         }
-    }
-
-    public void NotifyClicked()
-    {
-        Clicked?.Invoke(this);
     }
 }

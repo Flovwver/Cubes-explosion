@@ -6,7 +6,7 @@ public class Raycaster : MonoBehaviour
     [SerializeField] private float _maxRayDistance = 10f;
     [SerializeField] private InputReader _inputReader;
 
-    public event Action<CubeBehaviour> CubeHit;
+    public event Action<Cube> CubeHit;
 
     private void OnEnable()
     {
@@ -26,10 +26,9 @@ public class Raycaster : MonoBehaviour
         {
             GameObject hitObject = hit.collider.gameObject;
             
-            if (hitObject.TryGetComponent<CubeBehaviour>(out var cubeBehaviour))
+            if (hitObject.TryGetComponent<Cube>(out var cubeBehaviour))
             {
                 CubeHit?.Invoke(cubeBehaviour);
-                cubeBehaviour.NotifyClicked();
             }
         }
     }
