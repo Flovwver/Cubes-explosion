@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,7 +22,7 @@ public class Spawner : MonoBehaviour
             _progenitorCube.Clicked -= OnCubeClicked;
     }
 
-    public IEnumerable<Rigidbody> SpawnChildren(CubeBehaviour parentCube)
+    public void SpawnChildren(CubeBehaviour parentCube)
     {
         int count = Random.Range(_minChildren, _maxChildren + 1);
 
@@ -43,8 +42,6 @@ public class Spawner : MonoBehaviour
             child.ScaleFactor = parentCube.ScaleFactor;
 
             child.Clicked += OnCubeClicked;
-
-            yield return child.Rigidbody;
         }
     }
 

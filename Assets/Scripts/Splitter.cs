@@ -1,6 +1,4 @@
 using UnityEngine;
-using System;
-using Random = UnityEngine.Random;
 
 public class Splitter : MonoBehaviour
 {
@@ -22,13 +20,9 @@ public class Splitter : MonoBehaviour
 
     private void OnCubeHit(CubeBehaviour cubeBehaviour)
     {
-        if (Random.value > cubeBehaviour.SplitChance)
-            return;
+        if (Random.value <= cubeBehaviour.SplitChance)
+            _spawner.SpawnChildren(cubeBehaviour);
 
-        var bodies = _spawner.SpawnChildren(cubeBehaviour);
-
-        var center = cubeBehaviour.transform.position;
-
-        _explosioner.Explode(bodies, center);
+        _explosioner.Explode(cubeBehaviour);
     }
 }
